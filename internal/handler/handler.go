@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"strings"
 
 	"github.com/dorik33/calc-go/internal/model"
 	"github.com/dorik33/calc-go/pkg/calculate"
@@ -32,7 +33,7 @@ func CalculateHandler(w http.ResponseWriter, r *http.Request) {
 		log.Printf("Error parsing JSON: %v", err)
 		return
 	}
-
+	strings.ReplaceAll(req.Expression, " ", "")
 	result, err := calculate.Calculate(req.Expression)
 	if err != nil {
 		w.Header().Set("Content-Type", "application/json")
